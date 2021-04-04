@@ -26,35 +26,29 @@ const App = () => {
   }, []);
 
   const time = (
-    <h3>
-      {years} & {days > 1 ? days + " days" : "a " + days + " day "}
+    <h2>
+      {years} & {days > 1 ? days + " days " : "a day "}
       <FontAwesomeIcon icon={faHeart} />
-    </h3>
+    </h2>
   );
 
   const handleinputDay = () => {
     setDateAsChosen(true);
-    setDay("00");
-    setMonth("00");
-    setYear("0000");
     changeDay();
   };
 
   const changeDay = () => {
-    const myDay = moment(specialDate).format("DD");
-    setDay(myDay);
+    setDay(moment(specialDate).format("DD"));
     changeMonth();
   };
 
   const changeMonth = () => {
-    const myMonth = moment(specialDate).format("MM");
-    setMonth(myMonth);
+    setMonth(moment(specialDate).format("MM"));
     changeYear();
   };
 
   const changeYear = () => {
-    const myYear = moment(specialDate).format("YYYY");
-    setYear(myYear);
+    setYear(moment(specialDate).format("YYYY"));
     setTimeout(() => {
       setUpDate(true);
     }, 5000);
@@ -86,14 +80,14 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="date-picker">
-        <label htmlFor="date" className="mt-5 mb-2">
+      <div className="date-picker mt-5 mb-5">
+        <label htmlFor="date" className=" mb-2">
           <h4>Choose a Random Date</h4>
         </label>
         <input
           type="date"
           name="date"
-          className="mb-5 btn-light  form-control"
+          className="btn-light  form-control"
           onChange={handleinputDay}
         />
       </div>
