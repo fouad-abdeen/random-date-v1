@@ -14,57 +14,66 @@ const App = () => {
   const [year, setYear] = useState("0000");
   const [counterDuration] = useState(3000);
   const [years, setYears] = useState(0);
+  const [months, setMonths] = useState(0);
   const [days, setDays] = useState(0);
 
   useEffect(() => {
-    const oneDay = 24 * 60 * 60 * 1000;
-    const firstDate = new Date(new Date().getFullYear(), 3, 3);
-    const secondDate = new Date();
+    const currentYear = moment().format("YYYY");
+    const currentMonth = moment().format("MM");
+    const currentDay = moment().format("DD");
+    const currentDate = moment([
+      parseInt(currentYear),
+      parseInt(currentMonth),
+      parseInt(currentDay),
+    ]);
+    const passedDate = moment([2020, 4, 3]);
 
-    setYears(moment(specialDate).fromNow(true));
-    setDays(Math.round(Math.abs((firstDate - secondDate) / oneDay)));
+    const _years = currentDate.diff(passedDate, "years");
+    setYears(_years);
+    passedDate.add(_years, "years");
+
+    const _months = currentDate.diff(passedDate, "months");
+    setMonths(_months);
+    passedDate.add(_months, "months");
+
+    const _days = currentDate.diff(passedDate, "days");
+    setDays(_days);
   }, []);
 
   const time = (
     <h2>
-      {years} & {days > 1 ? days + " days " : "a day "}
+      {years === 0
+        ? ""
+        : years === 1
+        ? " " + years + " year"
+        : " " + years + " years"}
+      {months === 0
+        ? ""
+        : months === 1
+        ? " " + months + " month"
+        : " " + months + " months"}
+      {days === 0
+        ? ""
+        : days === 1
+        ? " " + days + " day"
+        : " " + days + " days"}{" "}
       <FontAwesomeIcon icon={faHeart} />
     </h2>
   );
 
-  const handleinputDay = () => {
+  const handleInputDate = () => {
     setDateAsChosen(true);
-    changeDay();
-  };
-
-  const changeDay = () => {
     setDay(moment(specialDate).format("DD"));
-    changeMonth();
-  };
-
-  const changeMonth = () => {
     setMonth(moment(specialDate).format("MM"));
-    changeYear();
-  };
-
-  const changeYear = () => {
     setYear(moment(specialDate).format("YYYY"));
+
     setTimeout(() => {
       setUpDate(true);
     }, 5000);
+
     setTimeout(() => {
       tellHerILoveYou();
     }, 7000);
-  };
-
-  const formatValue = (value) => `0${value}`;
-
-  const formatYearValue = (value) => {
-    if (dateIsChosen) {
-      return value;
-    } else {
-      return `000${value}`;
-    }
   };
 
   const tellHerILoveYou = () => {
@@ -78,6 +87,16 @@ const App = () => {
     }
   };
 
+  const formatValue = (value) => `0${value}`;
+
+  const formatYearValue = (value) => {
+    if (dateIsChosen) {
+      return value;
+    } else {
+      return `000${value}`;
+    }
+  };
+
   return (
     <div className="App">
       <div className="date-picker mt-5 mb-5">
@@ -88,7 +107,7 @@ const App = () => {
           type="date"
           name="date"
           className="btn-light  form-control"
-          onChange={handleinputDay}
+          onChange={handleInputDate}
         />
       </div>
 
