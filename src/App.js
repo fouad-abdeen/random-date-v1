@@ -81,7 +81,7 @@ const App = () => {
     const message = document.createElement("h5");
     message.innerHTML = "I love you Layla!";
     message.className = "mt-5 mb-2";
-    for (let i = 1; i < 2020; i++) {
+    for (let i = 1; i <= 2020; i++) {
       const msg = message.cloneNode(true);
       body.appendChild(msg);
     }
